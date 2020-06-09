@@ -34,7 +34,7 @@ This module makes it super simple to use the Mashov API in Python! This is an ex
 from MashovAPI import MashovAPI
 
 # Initialize MashovAPI class
-mashov = MashovAPI("myStudentID", "myPassword", "mySchoolName")
+mashov = MashovAPI("myStudentID", password = "myPassword", schoolName = "mySchoolName")
 
 # Log In
 mashov.login()
@@ -56,7 +56,7 @@ date = mashov.toDate(returnData)
 print("I was born on {}/{}/{}".format(date.day, date.month, date.year))
 ```
 
-The ``MashovAPI(username, password, school)`` class has a lot of features, methods, and helpful tricks, including extra aliases for some methods. Here are most, if not all, of the methods that the MashovAPI class has to offer:
+The ``MashovAPI`` class has a lot of features, methods, and helpful tricks, including extra aliases for some methods. Here are most, if not all, of the methods that the MashovAPI class has to offer:
 ```python
 def login():
 

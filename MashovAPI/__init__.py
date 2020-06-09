@@ -17,6 +17,11 @@ class MashovAPI:
 									'Content-Type': 'application/json'})
 		self.username = username
 		self.authID = 0
+		self.userID = self.authID
+		self.uid = self.authID
+		self.uID = self.authID
+		self.guid = self.authID
+		self.guID = self.authID
 		# Kwargs password
 		if "password" in kwargs:
 			self.password = kwargs["password"]

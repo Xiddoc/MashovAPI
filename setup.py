@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="MashovAPI",
-    version="1.1.5",
+    version="1.1.6",
     author="Xiddoc",
     author_email="sajihajyehia@gmail.com",
     description="The Unofficial Mashov API, giving you access to all existing features.",
