@@ -7,7 +7,8 @@ import datetime
 import json
 
 class MashovAPI:
-	def __init__(self, school, username, password = False, schoolData = False):
+	def __init__(self, username, **kwargs):
+		# MashovAPI("201234567", password = "myPass", schoolID = 52110, schoolData = {...}, schoolName = "הכפר")
 		self.url = "https://web.mashov.info/api/{}/"
 		self.session = requests.Session()
 		self.session.headers.update({'Accept': 'application/json, text/plain, */*',
@@ -15,14 +16,23 @@ class MashovAPI:
 									'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
 									'Content-Type': 'application/json'})
 		self.username = username
-		self.password = password
-		self.schoolData = schoolData
 		self.authID = 0
-		if not schoolData:
-			self.schoolData = self.getSchools()
+		# Kwargs password
+		if "password" in kwargs:
+			self.password = kwargs["password"]
 		else:
-			self.schoolData = schoolData
-		self.schoolID = self.getSchoolIDByName(school)
+			self.password = False
+		# Kwargs schoolData
+		if "schoolData" in kwargs:
+			self.schoolData = kwargs["schoolData"]
+		else:
+			self.schoolData = False
+		# Kwargs schoolID
+		if "schoolID" in kwargs:
+			self.schoolID = kwargs["schoolID"]
+		elif not self.schoolData:
+			self.schoolData = self.getSchools()
+			self.schoolID = self.getSchoolIDByName(kwargs["schoolName"])
 		self.currentYear = datetime.datetime.now().year
 
 	def login(self):
@@ -282,3 +292,69 @@ class MashovAPI:
 
 	def send(self, url, method = "get", params = {}, files = {}):
 		return getattr(self.session, str(method).strip().lower())(self.url.format(url), data = json.dumps(params), files = files)
+
+	def toString(self):
+		return json.dumps({
+		"MashovAPI" : {
+			"url" : self.url,
+			"sessionH" : dict(self.session.headers),
+			"sessionC" : self.session.cookies.get_dict(),
+			"username" : self.username,
+			"password" : self.password,
+			"schoolData" : self.schoolData,
+			"schoolID" : self.schoolID,
+			"currentYear" : self.currentYear,
+			"loginData" : self.loginData,
+			"isLoggedIn" : self.isLoggedIn,
+			"authID" : self.authID,
+			"userID" : self.userID,
+			"uid" : self.uid,
+			"uID" : self.uID,
+			"guid" : self.guid,
+			"guID" : self.guID,
+			"schoolSite" : self.schoolSite,
+			"moodleSite" : self.moodleSite,
+			"schoolName" : self.schoolName,
+			"lastName" : self.lastName,
+			"firstName" : self.firstName,
+			"className" : self.className,
+			"lastPass" : self.lastPass,
+			"lastLogin" : self.lastLogin,
+			"schoolYears" : self.schoolYears,
+			"csrfToken" : self.csrfToken,
+			"userChildren" : self.userChildren
+		}})
+
+	def fromString(objString):
+		# mashov = Mashov.fromString(stringFromToStringMethod)
+		objDict = json.loads(objString)["MashovAPI"]
+		username = objDict["username"]
+		password = objDict["password"]
+		schoolID = objDict["schoolID"]
+		newObj = MashovAPI(username, password = password, schoolID = schoolID)
+		newObj.url = objDict["url"]
+		newObj.session = requests.Session()
+		newObj.session.headers.update(objDict["sessionH"])
+		newObj.session.cookies.update(objDict["sessionC"])
+		newObj.schoolName = objDict["schoolName"]
+		newObj.schoolData = objDict["schoolData"]
+		newObj.currentYear = objDict["currentYear"]
+		newObj.loginData = objDict["loginData"]
+		newObj.isLoggedIn = objDict["isLoggedIn"]
+		newObj.authID = objDict["authID"]
+		newObj.userID = objDict["userID"]
+		newObj.uid = objDict["uid"]
+		newObj.uID = objDict["uID"]
+		newObj.guid = objDict["guid"]
+		newObj.guID = objDict["guID"]
+		newObj.schoolSite = objDict["schoolSite"]
+		newObj.moodleSite = objDict["moodleSite"]
+		newObj.lastName = objDict["lastName"]
+		newObj.firstName = objDict["firstName"]
+		newObj.className = objDict["className"]
+		newObj.lastPass = objDict["lastPass"]
+		newObj.lastLogin = objDict["lastLogin"]
+		newObj.schoolYears = objDict["schoolYears"]
+		newObj.csrfToken = objDict["csrfToken"]
+		newObj.userChildren = objDict["userChildren"]
+		return newObj

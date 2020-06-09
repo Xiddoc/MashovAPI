@@ -8,12 +8,13 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="MashovAPI",
-    version="1.1.1",
+    version="1.1.5",
     author="Xiddoc",
     author_email="sajihajyehia@gmail.com",
     description="The Unofficial Mashov API, giving you access to all existing features.",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
+    url="https://github.com/Xiddoc/MashovAPI",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
