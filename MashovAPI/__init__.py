@@ -22,6 +22,17 @@ class MashovAPI:
 		self.uID = self.authID
 		self.guid = self.authID
 		self.guID = self.authID
+		self.schoolSite = ""
+		self.moodleSite = ""
+		self.schoolName = ""
+		self.lastName = ""
+		self.firstName = ""
+		self.className = ""
+		self.lastPass = ""
+		self.lastLogin = ""
+		self.schoolYears = []
+		self.csrfToken = ""
+		self.userChildren = {}
 		# Kwargs password
 		if "password" in kwargs:
 			self.password = kwargs["password"]
@@ -99,9 +110,6 @@ class MashovAPI:
 			return True
 		else:
 			return False
-
-	def isLoggedIn(self):
-		return self.isLoggedIn
 
 	def getSession(self):
 		return self.session
